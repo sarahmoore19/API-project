@@ -40,7 +40,7 @@ module.exports = {
       review: "This was a mediocre spot.",
       stars: 3,
     }
-  ])
+  ], {})
   },
 
   async down (queryInterface, Sequelize) {
@@ -54,6 +54,6 @@ module.exports = {
   const Op = Sequelize.Op;
   queryInterface.bulkDelete(options, {
     id: {[Op.in]: [1, 2, 3]}
-  })
+  }, {})
   }
 };

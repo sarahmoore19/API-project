@@ -1,6 +1,5 @@
 'use strict';
 
-
 let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
@@ -18,22 +17,25 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   options.tableName = 'ReviewImages'
+   options.tableName = 'SpotImages';
    queryInterface.bulkInsert(options, [
     {
       id: 1,
-      reviewId: 1,
-      url: "image url"
+      spotId: 1,
+      url: "image url",
+      preview: true
     },
     {
       id: 2,
-      reviewId: 2,
-      url: "image url"
+      spotId: 2,
+      url: "image url",
+      preview: true
     },
     {
       id: 3,
-      reviewId: 3,
-      url: "image url"
+      spotId: 3,
+      url: "image url",
+      preview: true
     }
    ], {})
   },
@@ -45,9 +47,9 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-   options.tableName = 'ReviewImages';
+   options.tableName = 'SpotImages';
    const Op = Sequelize.Op;
-   queryInterface.bulkDelete(options, {
+   queryInterface.bulkDelete(option, {
      id: {[Op.in]: [1, 2, 3]}
    }, {})
   }
