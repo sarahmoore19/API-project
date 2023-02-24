@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       });
       if (user && user.validatePassword(password)) {
-        return await User.scope('currentUser').findByPk(user.id);
+        return await User.scope('scope1', 'currentUser').findByPk(user.id);
       }
     }
     static async signup({ username, email, password, firstName, lastName }) {
@@ -105,6 +105,9 @@ module.exports = (sequelize, DataTypes) => {
         },
         loginUser: {
           attributes: {}
+        },
+        scope1: {
+          attributes: { exclude: ["createdAt", "updatedAt"] }
         }
       }
     }
