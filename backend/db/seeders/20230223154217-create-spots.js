@@ -22,6 +22,7 @@ module.exports = {
       {
        // ownerId: 1,
         address: "123 Park Ave",
+        ownerId: 1,
         city: "NYC",
         state: "New York",
         country: "United States of America",
@@ -34,6 +35,7 @@ module.exports = {
       {
       //  ownerId: 1,
         address: "456 Memory Lane",
+        ownerId: 2,
         city: "Honolulu",
         state: "Hawaii",
         country: "United States of America",
@@ -46,6 +48,7 @@ module.exports = {
       {
       //  ownerId: 2,
         address: "768 Pearly Gates Drive",
+        ownerId: 3,
         city: "Gold",
         state: "Universe",
         country: "Jesus",

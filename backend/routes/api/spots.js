@@ -42,6 +42,8 @@ router.get('/', async (req, res, next) => {
   res.json({Spots: spotObjs})
 })
 
-
+router.get('/current', async (req, res, next) => {
+  
+})
 
 module.exports = router;
