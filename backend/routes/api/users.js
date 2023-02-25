@@ -45,8 +45,6 @@ router.post(
     user = await User.signup({ email, username, password, firstName, lastName });
     }
     catch(e) {
-      console.log(user1)
-      console.log(user2)
       let err = new Error('User already exists');
       err.status = 403;
       err.errors = {};
