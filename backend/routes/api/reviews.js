@@ -181,7 +181,7 @@ router.put('/:reviewId', requireAuth, validateRev, async (req, res) => {
     else {
       review.review = req.body.review,
       review.stars = req.body.stars
-      review.save()
+      await review.save()
       res.json(review);
     }
   }

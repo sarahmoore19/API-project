@@ -87,9 +87,6 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Spot',
-    validate: {
-
-    }
   });
   return Spot;
 };

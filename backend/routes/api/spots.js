@@ -56,7 +56,7 @@ router.get('/', async (req, res, next) => {
 
   spots = await addImgRating(spots)
 
-  res.json({Spots: spots})
+  return res.json({Spots: spots})
 })
 
 router.get('/current', requireAuth, async (req, res, next) => {
@@ -64,7 +64,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
 
   spots = await addImgRating(spots)
 
-  res.json({Spots: spots})
+  return res.json({Spots: spots})
 })
 
 router.get('/:spotId', async (req, res, next) => {
@@ -115,7 +115,7 @@ router.get('/:spotId', async (req, res, next) => {
     spot.previewImage = null;
   }
 
-  res.json(spot)
+  return res.json(spot)
  }
 
   catch(e) {
@@ -123,7 +123,7 @@ router.get('/:spotId', async (req, res, next) => {
     let err = new Error("Spot couldn't be found");
     res.statusCode = 404;
     err.status = 404
-    res.json({
+    return res.json({
       message: err.message,
       statusCode: err.status
     })
@@ -144,10 +144,10 @@ const validateSpot = [
     .exists({ checkFalsy: true })
     .withMessage('Country is required'),
   check('lat')
-    .exists({ checkFalsy: true })
+    .exists()
     .withMessage('Latitude is not valid'),
   check('lng')
-    .exists({ checkFalsy: true })
+    .exists()
     .withMessage('Longitude is not valid'),
   check('name')
     .exists({ checkFalsy: true })
@@ -178,7 +178,7 @@ router.post('/', requireAuth, validateSpot, async (req, res) => {
     price: b.price
   })
   res.statusCode = 201;
-  res.json(spot)
+  return res.json(spot)
 })
 
 const validateImg = [
@@ -205,7 +205,7 @@ router.post('/:spotId/images', requireAuth, validateImg, async (req, res) => {
     res.statusCode = 404;
     let err = new Error("Spot couldn't be found");
     err.status = 404
-      res.json({
+      return res.json({
         message: err.message,
         statusCode: err.status
         })
@@ -218,7 +218,7 @@ router.post('/:spotId/images', requireAuth, validateImg, async (req, res) => {
       let err = new Error('Spot does not belong to current user');
       res.statusCode = 403;
       err.status = 403;
-      res.json({
+      return res.json({
         message: err.message,
         statusCode: err.status
       })
@@ -237,7 +237,7 @@ router.post('/:spotId/images', requireAuth, validateImg, async (req, res) => {
         res.statusCode = 400;
         let err = new Error("Spot already has preview image");
         err.status = 400;
-        res.json({
+        return res.json({
           message: err.message,
           statusCode: err.status
         })
@@ -248,7 +248,7 @@ router.post('/:spotId/images', requireAuth, validateImg, async (req, res) => {
           url: b.url,
           preview: b.preview
         })
-        res.json({
+        return res.json({
           id: img.id,
           url: img.url,
           preview: img.preview
@@ -271,7 +271,7 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res) => {
     res.statusCode = 404;
     let err = new Error("Spot couldn't be found");
     err.status = 404
-      res.json({
+      return res.json({
         message: err.message,
         statusCode: err.status
         })
@@ -285,24 +285,36 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res) => {
       let err = new Error('Spot does not belong to current user');
       res.statusCode = 403;
       err.status = 403;
-      res.json({
+      return res.json({
         message: err.message,
         statusCode: err.status
       })
     }
 
     else {
-      spot.address = b.address
-      spot.city = b.city
-      spot.state = b.state
-      spot.country = b.country
-      spot.lat = b.lat
-      spot.lng = b.lng
-      spot.name = b.name
-      spot.description = b.description
-      spot.price = b.price
-      spot.save();
-      res.json(spot);
+      try {
+      await spot.update({
+      address: b.address,
+      city: b.city,
+      state: b.state,
+      country: b.country,
+      lat: b.lat,
+      lng: b.lng,
+      name: b.name,
+      description: b.description,
+      price: b.price
+      })
+      return res.json(spot);
+      }
+      catch(e) {
+      let err = new Error(e.errors[0].message);
+      res.statusCode = 400;
+      err.status = 400;
+      return res.json({
+        message: err.message,
+        statusCode: err.status
+      })
+      }
     }
   }
 
@@ -320,7 +332,7 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
     res.statusCode = 404;
     let err = new Error("Spot couldn't be found");
     err.status = 404
-      res.json({
+      return res.json({
         message: err.message,
         statusCode: err.status
         })
@@ -334,7 +346,7 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
       let err = new Error('Spot does not belong to current user');
       err.status = 403;
       res.statusCode = 403;
-      res.json({
+      return res.json({
         message: err.message,
         statusCode: err.status
       })
@@ -344,7 +356,7 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
 
       spot.destroy();
 
-      res.json({
+      return res.json({
         "message": "Successfully deleted",
         "statusCode": 200
       });
@@ -364,7 +376,7 @@ router.get('/:spotId/reviews', async (req, res) => {
     res.statusCode = 404;
     let err = new Error("Spot couldn't be found");
     err.status = 404
-      res.json({
+      return res.json({
         message: err.message,
         statusCode: err.status
     })
@@ -386,7 +398,7 @@ router.get('/:spotId/reviews', async (req, res) => {
         }
       ]
     })
-  res.json({Reviews: revs});
+  return res.json({Reviews: revs});
   }
 
 
@@ -410,7 +422,7 @@ router.post('/:spotId/reviews', requireAuth, validateRev, async (req, res) => {
     res.statusCode = 404;
     let err = new Error("Spot couldn't be found");
     err.status = 404
-      res.json({
+      return res.json({
         message: err.message,
         statusCode: err.status
     })
@@ -427,7 +439,7 @@ router.post('/:spotId/reviews', requireAuth, validateRev, async (req, res) => {
       res.statusCode = 403;
       let err = new Error("User already has a review for this spot");
       err.status = 403;
-        res.json({
+        return res.json({
           message: err.message,
           statusCode: err.status
       })
@@ -439,7 +451,7 @@ router.post('/:spotId/reviews', requireAuth, validateRev, async (req, res) => {
         review: req.body.review,
         stars: req.body.stars
       })
-      res.json(rev)
+      return res.json(rev)
     }
   }
 })
