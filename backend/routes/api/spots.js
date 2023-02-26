@@ -121,6 +121,7 @@ router.get('/:spotId', async (req, res, next) => {
   catch(e) {
     res.statusCode = 404;
     let err = new Error("Spot couldn't be found");
+    res.statusCode = 404;
     err.status = 404
     res.json({
       message: err.message,
@@ -215,7 +216,8 @@ router.post('/:spotId/images', requireAuth, validateImg, async (req, res) => {
 
     if (spot.ownerId !== req.user.id) {
       let err = new Error('Spot does not belong to current user');
-      err.status = 401;
+      res.statusCode = 403;
+      err.status = 403;
       res.json({
         message: err.message,
         statusCode: err.status
@@ -281,7 +283,8 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res) => {
 
     if (spot.ownerId !== req.user.id) {
       let err = new Error('Spot does not belong to current user');
-      err.status = 401;
+      res.statusCode = 403;
+      err.status = 403;
       res.json({
         message: err.message,
         statusCode: err.status
@@ -329,7 +332,8 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
 
     if (spot.ownerId !== req.user.id) {
       let err = new Error('Spot does not belong to current user');
-      err.status = 401;
+      err.status = 403;
+      res.statusCode = 403;
       res.json({
         message: err.message,
         statusCode: err.status

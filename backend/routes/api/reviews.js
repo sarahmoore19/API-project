@@ -100,7 +100,8 @@ router.post('/:reviewId/images', requireAuth, validateImg, async (req, res) => {
     let review = await Review.findByPk(id);
     if (req.user.id !== review.userId) {
       let err = new Error('Review does not belong to current user');
-        err.status = 401;
+      res.statusCode = 403;
+      err.status = 403;
         res.json({
           message: err.message,
           statusCode: err.status
@@ -169,7 +170,8 @@ router.put('/:reviewId', requireAuth, validateRev, async (req, res) => {
     let review = await Review.findByPk(id);
     if (review.userId !== req.user.id) {
       let err = new Error('Review does not belong to current user');
-      err.status = 401;
+      res.statusCode = 403;
+      err.status = 403;
       res.json({
         message: err.message,
         statusCode: err.status
@@ -197,6 +199,7 @@ router.delete('/:reviewId', requireAuth, async (req, res) => {
   if (count < 1) {
     res.statusCode = 404;
     let err = new Error("Review couldn't be found");
+    res.statusCode = 404;
     err.status = 404;
       res.json({
         message: err.message,
@@ -208,7 +211,8 @@ router.delete('/:reviewId', requireAuth, async (req, res) => {
     let review = await Review.findByPk(id);
     if (review.userId !== req.user.id) {
       let err = new Error('Review does not belong to current user');
-      err.status = 401;
+      res.statusCode = 403;
+      err.status = 403;
       res.json({
         message: err.message,
         statusCode: err.status

@@ -46,6 +46,7 @@ router.post(
     }
     catch(e) {
       let err = new Error('User already exists');
+      res.statusCode = 403;
       err.status = 403;
       err.errors = {};
       if (e.errors[0].path == 'username') err.errors.username = 'User with that username already exists';
