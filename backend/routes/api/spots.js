@@ -128,11 +128,9 @@ const validateSpot = [
     .withMessage('Country is required'),
   check('lat')
     .exists({ checkFalsy: true })
-    .isNumeric()
     .withMessage('Latitude is not valid'),
   check('lng')
     .exists({ checkFalsy: true })
-    .isNumeric()
     .withMessage('Longitude is not valid'),
   check('name')
     .exists({ checkFalsy: true })
@@ -307,7 +305,7 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
         message: err.message,
         statusCode: err.status
         })
-    }
+  }
 
   else {
 
@@ -332,6 +330,49 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
       });
     }
   }
+
+})
+
+router.get('/:spotId/reviews', async (req, res) => {
+  let id = req.params.spotId;
+
+  let count = await Spot.count({where: {
+    id: id
+  }})
+
+  if (count < 1) {
+    res.statusCode = 404;
+    let err = new Error("Spot couldn't be found");
+    err.status = 404
+      res.json({
+        message: err.message,
+        statusCode: err.status
+    })
+  }
+
+  else {
+    let revs = await Review.findAll({
+      where: {
+        spotId: id
+      },
+      include: [
+        {
+          model: User,
+          attributes: ["id", "firstName", "lastName"]
+        },
+        {
+          model: ReviewImage,
+          attributes: ["id", "url"]
+        }
+      ]
+    })
+  res.json({Reviews: revs});
+  }
+
+
+})
+
+router.post(':spotId/reviews', requireAuth, async (req, res) => {
 
 })
 

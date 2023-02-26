@@ -1,6 +1,6 @@
 'use strict';
 const {
-  Model
+  Model, Op
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
@@ -56,13 +56,17 @@ module.exports = (sequelize, DataTypes) => {
     lat: {
       type: DataTypes.DECIMAL,
       validate: {
-        isDecimal: true
+        isDecimal: true,
+        min: -90,
+        max: 90
       }
     },
     lng: {
       type: DataTypes.DECIMAL,
       validate: {
-        isDecimal: true
+        isDecimal: true,
+        min: -180,
+        max: 180
       }
     },
     name: {
@@ -84,7 +88,7 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Spot',
     validate: {
-      
+
     }
   });
   return Spot;
