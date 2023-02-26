@@ -18,6 +18,8 @@ async function addImgRating(spots) {
 
     let spot = spotObjs[i];
 
+
+    try {
     let reviews = await Review.findOne({
       where: {
         spotId: spot.id
@@ -27,6 +29,10 @@ async function addImgRating(spots) {
       ]
     })
     spot.avgRating = reviews.toJSON().avgRating;
+    }
+    catch {
+      spot.avgRating = null;
+    }
 
     try {
     let img = await SpotImage.findOne({
@@ -79,6 +85,7 @@ router.get('/:spotId', async (req, res, next) => {
   })
   spot.Owner = owner.toJSON()
 
+  try {
   let reviews = await Review.findOne({
     where: {
       spotId: spot1.id
@@ -90,7 +97,12 @@ router.get('/:spotId', async (req, res, next) => {
   })
   spot.avgStarRating = reviews.toJSON().avgRating;
   spot.numReviews = reviews.toJSON().numReviews;
-
+  }
+  catch {
+    spot.avgStarRating = null;
+    spot.numReviews = null;
+  }
+  try {
   let img = await SpotImage.findOne({
     where: {
       spotId: spot1.id,
@@ -98,6 +110,10 @@ router.get('/:spotId', async (req, res, next) => {
     }
   })
   spot.previewImage = img.toJSON().url
+  }
+  catch {
+    spot.previewImage = null;
+  }
 
   res.json(spot)
  }

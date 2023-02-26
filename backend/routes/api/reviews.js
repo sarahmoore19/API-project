@@ -168,8 +168,6 @@ router.put('/:reviewId', requireAuth, validateRev, async (req, res) => {
   else {
     let review = await Review.findByPk(id);
     if (review.userId !== req.user.id) {
-      console.log(review.userId);
-      console.log(req.user.id);
       let err = new Error('Review does not belong to current user');
       err.status = 401;
       res.json({
@@ -209,8 +207,6 @@ router.delete('/:reviewId', requireAuth, async (req, res) => {
   else {
     let review = await Review.findByPk(id);
     if (review.userId !== req.user.id) {
-      console.log(review.userId);
-      console.log(req.user.id);
       let err = new Error('Review does not belong to current user');
       err.status = 401;
       res.json({
