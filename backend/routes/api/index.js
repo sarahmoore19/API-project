@@ -10,7 +10,7 @@ const { restoreUser } = require('../../utils/auth.js');
 const {requireAuth} = require('../../utils/auth.js');
 
 router.get('/test', requireAuth, (req, res) => {
-  res.json({message: 'success'})
+  return res.json({message: 'success'})
 })
 
 router.use(restoreUser);
@@ -28,7 +28,7 @@ router.use('/review-images', reviewImagesRouter);
 router.use('/spot-images', spotImagesRouter);
 
 router.post('/test', function(req, res) {
-  res.json({ requestBody: req.body });
+  return res.json({ requestBody: req.body });
 });
 
 module.exports = router;

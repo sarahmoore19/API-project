@@ -22,7 +22,7 @@ router.delete('/:imageId', requireAuth, async (req, res) => {
     let err = new Error("Spot image couldn't be found");
     res.statusCode = 404;
     err.status = 404;
-      res.json({
+      return res.json({
         message: err.message,
         statusCode: err.status
     })
@@ -36,15 +36,15 @@ router.delete('/:imageId', requireAuth, async (req, res) => {
       let err = new Error('Review does not belong to current user');
       res.statusCode = 403;
       err.status = 403;
-      res.json({
+      return res.json({
         message: err.message,
         statusCode: err.status
       })
     }
 
     else {
-      img.destroy();
-      res.json({
+      await img.destroy();
+      return res.json({
         message: "Successfully Deleted",
         statusCode: 200
       });

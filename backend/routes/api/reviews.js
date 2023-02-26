@@ -64,7 +64,7 @@ router.get('/current', requireAuth, async (req, res) => {
 
   }
 
-  res.json({Reviews: revObjs});
+  return res.json({Reviews: revObjs});
 })
 
 const validateImg = [
@@ -89,7 +89,7 @@ router.post('/:reviewId/images', requireAuth, validateImg, async (req, res) => {
     res.statusCode = 404;
     let err = new Error("Review couldn't be found");
     err.status = 404;
-      res.json({
+      return res.json({
         message: err.message,
         statusCode: err.status
     })
@@ -102,7 +102,7 @@ router.post('/:reviewId/images', requireAuth, validateImg, async (req, res) => {
       let err = new Error('Review does not belong to current user');
       res.statusCode = 403;
       err.status = 403;
-        res.json({
+        return res.json({
           message: err.message,
           statusCode: err.status
         })
@@ -120,7 +120,7 @@ router.post('/:reviewId/images', requireAuth, validateImg, async (req, res) => {
         res.statusCode = 403;
         let err = new Error("Maximum number of images for this resource was reached");
         err.status = 403;
-          res.json({
+          return res.json({
             message: err.message,
             statusCode: err.status
         })
@@ -130,7 +130,7 @@ router.post('/:reviewId/images', requireAuth, validateImg, async (req, res) => {
         let img = await review.createReviewImage({
           url: req.body.url
         })
-        res.json({id: img.id, url: img.url})
+        return res.json({id: img.id, url: img.url})
       }
     }
   }
@@ -160,7 +160,7 @@ router.put('/:reviewId', requireAuth, validateRev, async (req, res) => {
     res.statusCode = 404;
     let err = new Error("Review couldn't be found");
     err.status = 404;
-      res.json({
+      return res.json({
         message: err.message,
         statusCode: err.status
     })
@@ -172,7 +172,7 @@ router.put('/:reviewId', requireAuth, validateRev, async (req, res) => {
       let err = new Error('Review does not belong to current user');
       res.statusCode = 403;
       err.status = 403;
-      res.json({
+      return res.json({
         message: err.message,
         statusCode: err.status
       })
@@ -182,7 +182,7 @@ router.put('/:reviewId', requireAuth, validateRev, async (req, res) => {
       review.review = req.body.review,
       review.stars = req.body.stars
       await review.save()
-      res.json(review);
+      return res.json(review);
     }
   }
 })
@@ -201,7 +201,7 @@ router.delete('/:reviewId', requireAuth, async (req, res) => {
     let err = new Error("Review couldn't be found");
     res.statusCode = 404;
     err.status = 404;
-      res.json({
+      return res.json({
         message: err.message,
         statusCode: err.status
     })
@@ -213,15 +213,15 @@ router.delete('/:reviewId', requireAuth, async (req, res) => {
       let err = new Error('Review does not belong to current user');
       res.statusCode = 403;
       err.status = 403;
-      res.json({
+      return res.json({
         message: err.message,
         statusCode: err.status
       })
     }
 
     else {
-      review.destroy()
-      res.json({
+      await review.destroy()
+      return res.json({
         message: "Successfully Deleted",
         statusCode: 200
       });
