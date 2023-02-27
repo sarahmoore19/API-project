@@ -144,4 +144,49 @@ router.put('/:bookingId', requireAuth, validateDate, async (req, res) => {
   }
 })
 
+router.delete('/:bookingId', requireAuth, async (req, res) => {
+  let id = req.params.bookingId;
+  let count = await Booking.count({where: {id: id}});
+  if (count < 1) {
+    res.statusCode = 404;
+    let err = new Error("Booking couldn't be found");
+    err.status = 404
+      return res.json({
+        message: err.message,
+        statusCode: err.status
+    })
+  }
+  else {
+    let booking = await Booking.findByPk(id);
+    if (req.user.id !== booking.userId) {
+      let err = new Error('Booking must belong to current user');
+      err.status = 403;
+      res.statusCode = 403;
+      return res.json({
+        message: err.message,
+        statusCode: err.status
+      })
+    }
+    else {
+      let startNum = new Date(booking.startDate).getTime()
+      if (startNum <= Date.now()) {
+        let err = new Error("Bookings that have been started can't be deleted");
+            err.status = 403;
+            res.statusCode = 403;
+            return res.json({
+            message: err.message,
+            statusCode: err.status,
+          })
+      }
+      else {
+        await booking.destroy()
+        res.json({
+          "message": "Successfully deleted",
+          "statusCode": 200
+        })
+      }
+      }
+    }
+})
+
 module.exports = router;

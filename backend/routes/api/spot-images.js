@@ -33,7 +33,7 @@ router.delete('/:imageId', requireAuth, async (req, res) => {
     let spot = await Spot.findByPk(img.spotId)
     if (spot.ownerId !== req.user.id) {
 
-      let err = new Error('Review does not belong to current user');
+      let err = new Error('Spot does not belong to current user');
       res.statusCode = 403;
       err.status = 403;
       return res.json({
