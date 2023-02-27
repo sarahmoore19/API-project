@@ -2,11 +2,13 @@ const express = require('express');
 
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 const { User, Spot, Review, Booking, ReviewImage, SpotImage, sequelize } = require('../../db/models');
-const Op = sequelize.Op;
+const { Op } = require('sequelize');
 const router = express.Router();
 
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const e = require('express');
+const { where } = require('sequelize');
 
 async function addImgRating(spots) {
   let spotObjs = [];
@@ -51,12 +53,75 @@ async function addImgRating(spots) {
   return spotObjs
 }
 
+function queries(req) {
+  let q = req;
+  let errors = {};
+  if (q.page && q.page < 1) errors.page = "Page must be greater than or equal to 1";
+  if (q.size && q.size < 1) errors.size = "Size must be greater than or equal to 1";
+  if (q.maxLat && q.maxLat > 90) errors.maxLat = "Maximum latitude is invalid";
+  if (q.minLat && q.minLat < -90) errors.minLat = "Minimum latitude is invalid";
+  if (q.maxLng && q.maxLng > 180) errors.maxLng = "Maximum longitude is invalid";
+  if (q.minLng && q.minLng < -180) errors.minLng = "Minimum longitude is invalid";
+  if (q.minPrice && q.minPrice < 0) errors.minPrice = "Maximum price must be greater than or equal to 0";
+  if (q.maxPrice && q.maxPrice < 0) errors.maxPrice = "Minimum price must be greater than or equal to 0";
+  if (Object.keys(errors).length > 0) {
+    let err = new Error('Validation Error');
+    err.status = 400;
+    err.errors = errors;
+    return err
+  }
+  else return true
+}
+
 router.get('/', async (req, res, next) => {
-  let spots = await Spot.findAll();
+  let q = req.query
+  if (queries(q) === true) {
+  let maxLat = 90;
+  let minLat = -90;
+  let minLng = -180;
+  let maxLng = 180;
+  let minPrice = 0;
+  let maxPrice = 9000000000000000;
+  let limit = await Spot.count();
+  let offset = 0;
+
+  if (q.size) limit = q.size;
+  if (q.page) offset = limit * (q.page - 1);
+  if (q.maxLat) maxLat = q.maxLat;
+  if (q.minLat) minLat = q.minLat;
+  if (q.maxLng) maxLng = q.maxLng;
+  if (q.minLng) minLng = q.minLng;
+  if (q.minPrice) minPrice = q.minPrice;
+  if (q.maxPrice) maxPrice = q.maxPrice;
+
+  let where = {
+    price: {
+      [Op.between]: [minPrice, maxPrice]
+    },
+    lat: {
+      [Op.between]: [minLat, maxLat]
+    },
+    lng: {
+      [Op.between]: [minLng, maxLng]
+    }
+  }
+
+  let spots = await Spot.findAll({
+    where: where,
+    limit: limit,
+    offset: offset
+  });
 
   spots = await addImgRating(spots)
 
-  return res.json({Spots: spots})
+  let obj = {Spots: spots}
+  if (q.page) obj.page = q.page
+  if (q.size) obj.size = q.size
+
+  return res.json(obj)
+  }
+
+  else next(queries(req.query))
 })
 
 router.get('/current', requireAuth, async (req, res, next) => {
