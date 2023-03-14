@@ -21,7 +21,7 @@ const validateSignup = [
     .withMessage('Please provide a valid email.'),
   check('username')
     .exists({ checkFalsy: true })
-    .isLength({ min: 4 })
+    .isLength({ min: 2 })
     .withMessage('Please provide a username with at least 4 characters.'),
   check('username')
     .not()
@@ -48,9 +48,10 @@ router.post(
       let err = new Error('User already exists');
       res.statusCode = 403;
       err.status = 403;
-      err.errors = {};
-      if (e.errors[0].path == 'username') err.errors.username = 'User with that username already exists';
-      else err.errors.email = 'User with that email already exists';
+      err.errors = [];
+      console.log(e.errors)
+      if (e.errors[0].path == 'username') err.errors.push('User with that username already exists');
+      if (e.errors[0].path == 'email') err.errors.push('User with that email already exists');
       next(err)
     }
 
