@@ -33,9 +33,19 @@ function Navigation({ isLoaded }){
   }
 
   return (
-    <ul>
+    <ul style={{listStyleType: 'none', display: 'flex'}}>
       <li>
-        <NavLink exact to="/">Home</NavLink>
+        <NavLink style={{fontSize: '50px', color: '#FF5A5F', textDecoration: 'none'}} exact to="/">
+        <i class="fa-brands fa-airbnb"></i>
+        <span style={{fontSize: '25px'}}>RareBnB</span>
+          </NavLink>
+      </li>
+      <li>
+        { sessionUser && (
+        <NavLink style={{fontSize: '20px', color: '#FF5A5F'}} exact to="/spot/CREATE">
+        Create a Spot
+        </NavLink>
+        )}
       </li>
       {isLoaded && sessionLinks}
     </ul>
