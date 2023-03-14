@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import {useHistory} from 'react-router-dom';
 import { useModal } from "../../context/Modal";
 import * as sessionActions from "../../store/session";
 import './SignupForm.css';
@@ -14,6 +15,7 @@ function SignupFormModal() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
+  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,6 +23,7 @@ function SignupFormModal() {
       setErrors([]);
       return dispatch(sessionActions.signup({ email, username, firstName, lastName, password }))
         .then(closeModal)
+        .then(history.push('/'))
         .catch(async (res) => {
           const data = await res.json();
           console.log(data)
@@ -91,7 +94,17 @@ function SignupFormModal() {
             required
           />
         </label>
-        <button type="submit">Sign Up</button>
+        <button
+        disabled={
+          !email ||
+          username.length < 4 ||
+          !firstName ||
+          !lastName ||
+          password.length < 6||
+          confirmPassword !== password}
+        type="submit">
+          Sign Up
+        </button>
       </form>
     </>
   );
