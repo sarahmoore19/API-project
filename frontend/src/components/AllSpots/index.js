@@ -9,17 +9,12 @@ import SpotCard from './SpotCard';
 function AllSpots() {
   const dispatch = useDispatch();
   const spots = useSelector(state => state.spots.allSpots);
-  console.log('==========', spots);
   let arr = Object.values(spots);
-  console.log('---------', arr);
 
   useEffect(() => {
     dispatch(spotActions.allSpots())
-    console.log('use effect triggered')
   }, [dispatch])
 
-
-  if (!arr.length) return null
 
   return (
     <div>

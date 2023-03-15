@@ -1,14 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Tooltip } from 'react-tooltip'
 
 function SpotCard({spot}) {
   return (
     <div>
     <Link to={`/spots/${spot.id}`}>
-      <img src='https://catalog.obitel-minsk.com/blog/wp-content/uploads/2020/09/2XAsc9_5af0044faad471_82363956-tmb-720x411xfill.jpg'/>
-      <p>{spot.name}</p>
-    </Link>
+        <img
+        data-tooltip-id="my-tooltip"
+        data-tooltip-content={spot.name}
+        height='250'
+        width='400'
+        src={spot.previewImage || 'https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-15.png'}/>
+        <div>
+          <span>{spot.city}, {spot.state}</span>
+          <span>&#9733;{spot.avgRating || 'New'}</span>
+        </div>
+        <div>${spot.price}/night</div>
+      </Link>
+      <Tooltip id="my-tooltip" />
     </div>
   )
 }

@@ -7,7 +7,6 @@ const CURRENT = 'spots/CURRENT'
 /*
 get all spots,
 get spot by Id,
-
 */
 
 const setAllSpots = (arr) => {
@@ -17,24 +16,16 @@ const setAllSpots = (arr) => {
   };
 };
 
-const setOneSpot = (id) => {
+const setOneSpot = (obj) => {
   return {
     type: ONE,
-    id
-  };
-};
-
-const setCurrentSpots = (userId) => {
-  return {
-    type: ONE,
-    userId
+    obj
   };
 };
 
 export const allSpots = () => async (dispatch) => {
   const response = await csrfFetch('/api/spots');
   const data = await response.json();
-  console.log(data)
   dispatch(setAllSpots(data.Spots));
   return response
 };
@@ -42,6 +33,7 @@ export const allSpots = () => async (dispatch) => {
 export const oneSpot = (id) => async (dispatch) => {
 const response = await csrfFetch(`/api/spots/${id}`);
   const data = await response.json();
+  dispatch(setOneSpot(data));
   return response
 };
 
@@ -74,12 +66,17 @@ let initialState = {
 const spotsReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
-    default:
-      return state;
     case ALL:
-      newState = Object.assign({}, state);
+      newState = {...state};
+      newState.allSpots = {};
       action.arr.forEach(s => newState.allSpots[s.id] = s)
       return newState;
+    case ONE:
+      newState = {...state, oneSpot: {}};
+      newState.oneSpot = action.obj
+      return newState;
+    default:
+      return state;
   }
 };
 
