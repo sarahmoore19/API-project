@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import * as reviewActions from '../../store/reviews';
 import React, { useEffect, useState } from 'react'
-import ReviewCard from '../OneSpot/ReviewCard';
+import ReviewCard from '../SpotPage/ReviewCard';
 
 
 function CurrentReviews() {

@@ -4,8 +4,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as spotActions from '../../store/spots';
 import * as reviewActions from '../../store/reviews';
 import ReviewCard from './ReviewCard';
+import OpenModalButton from '../OpenModalButton';
+import CreateReviewModal from '../ReviewModals/CreateReviewModal';
 
 function OneSpot() {
+
+  function hasReview() {
+    for (let i = 0; i < arr.length; i++) {
+      if (sessionUser && arr[i].userId == sessionUser.id) return true
+    }
+    return false
+  }
+
   let {id} = useParams()
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
@@ -22,13 +32,14 @@ function OneSpot() {
 
   if (spot.id == undefined) return null;
 
-  let previewImage = spot.SpotImages.find(s => s.preview == true)
+  let imgArr = spot.SpotImages;
+  let previewImage = imgArr.find(s => s.preview == true)
 
-  function hasReview() {
-    for (let i = 0; i < arr.length; i++) {
-      if (sessionUser && arr[i].userId == sessionUser.id) return true
-    }
-    return false
+  for (let i = imgArr.length; i < 5; i++) {
+    imgArr.push({
+      preview: false,
+      url: 'https://www.folklor-mersch.lu/images/sursite/Photos-Coming-Soon.jpg'
+    })
   }
 
   return (
@@ -39,7 +50,7 @@ function OneSpot() {
         <h4>{spot.city}, {spot.state}, {spot.country}</h4>
         <div>
           <img height='350px' width='500px' src={previewImage.url}></img>
-          {spot.SpotImages.map(i => (
+          {imgArr.map(i => (
             i.preview ? null :
             <img key={i.id} height='175px' width='250px' src={i.url}></img>
           ))}
@@ -56,7 +67,7 @@ function OneSpot() {
               &#9733;{spot.avgStarRating} · {spot.numReviews} {spot.numReviews > 1 ? 'Reviews ' : 'Review '}
             </span> :
             <span>
-              &#9733; New
+              &#9733;New
             </span>}
             <button onClick={() => window.alert('Coming soon!')}>
               Reserve
@@ -72,15 +83,16 @@ function OneSpot() {
             &#9733;{spot.avgStarRating} · {spot.numReviews} {spot.numReviews > 1 ? 'Reviews' : 'Review'}
           </h2> :
           <h2>
-            &#9733; New
+            &#9733;New
           </h2>
         }
         {
           !hasReview() && sessionUser && sessionUser.id != spot.ownerId &&
 
-            <button>
-              Post your review
-            </button>
+            <OpenModalButton
+              buttonText='Post Your Review'
+              modalComponent={<CreateReviewModal spotId={id} />}
+            />
 
         }
         {

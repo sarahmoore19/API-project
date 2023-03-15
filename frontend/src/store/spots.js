@@ -37,15 +37,12 @@ const response = await csrfFetch(`/api/spots/${id}`);
   return response
 };
 
-export const currentSpots = () => async (dispatch) => {
-  const response = await csrfFetch(`/api/spots/current`);
+export const deleteSpot = (id) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${id}`, {
+    method: 'DELETE'
+  });
   const data = await response.json();
-
   return response
-};
-
-export const deleteSpot = () => async (dispatch) => {
-
 };
 
 export const updateSpots = () => async (dispatch) => {

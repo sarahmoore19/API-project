@@ -19,7 +19,7 @@ function Navigation({ isLoaded }){
 <li>
   { sessionUser && (
   <NavLink style={{fontSize: '20px', color: '#FF5A5F'}} exact to="/spots/new">
-  Create a Spot
+  Create a New Spot
   </NavLink>
   )}
 </li>

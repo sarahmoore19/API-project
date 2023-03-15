@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import * as spotActions from '../../store/spots'
 import React, { useEffect, useState } from 'react'
@@ -12,7 +12,7 @@ function CurrentSpots() {
 
   let arr = Object.values(spots);
   arr = arr.filter(o => o.ownerId == sessionUser.id);
-  
+
   useEffect(() => {
     dispatch(spotActions.allSpots())
   }, [dispatch])
@@ -20,6 +20,11 @@ function CurrentSpots() {
   return (
     <div>
     <h2>Manage Spots</h2>
+    <Link to='/spots/new'>
+      <button>
+        Create a New Spot
+      </button>
+    </Link>
     {
       arr.map(o => (
         <SpotCard

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import OpenModalButton from '../OpenModalButton';
+import DeleteModal from '../ReviewModals/DeleteModal';
 
 function ReviewCard({review, reviewContext}) {
   const sessionUser = useSelector(state => state.session.user);
@@ -18,7 +20,13 @@ function ReviewCard({review, reviewContext}) {
       {
         sessionUser &&
         review.userId == sessionUser.id &&
-        <button>Delete</button>
+        <OpenModalButton
+          buttonText='Delete'
+          modalComponent={
+          <DeleteModal
+          id={review.id}
+          deleteContext='review' />}
+        />
       }
     </div>
   )

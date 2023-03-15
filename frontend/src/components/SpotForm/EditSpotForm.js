@@ -2,10 +2,10 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-function CreateSpot() {
+function EditSpotForm() {
   return (
-    <h2>create spot</h2>
+    <h2>edit Spot</h2>
   )
 }
 
-export default CreateSpot;
+export default EditSpotForm;

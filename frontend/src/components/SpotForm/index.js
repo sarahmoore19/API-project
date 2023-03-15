@@ -4,7 +4,10 @@ import { useSelector } from 'react-redux';
 
 function SpotForm() {
   return (
-    <h2>Spots</h2>
+    <div>
+      <h1>Create a New Spot</h1>
+      
+    </div>
   )
 }
 

@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Tooltip } from 'react-tooltip'
+import { Tooltip } from 'react-tooltip';
+import DeleteModal from '../ReviewModals/DeleteModal';
+import OpenModalButton from '../OpenModalButton';
 
 function SpotCard({spot, reviewContext}) {
   return (
@@ -18,15 +20,21 @@ function SpotCard({spot, reviewContext}) {
           <span>&#9733;{spot.avgRating || 'New'}</span>
         </div>
         <div>${spot.price}/night</div>
-        {
-           reviewContext == 'user' &&
-          <button>Update</button>
-        }
-        {
-          reviewContext == 'user' &&
-         <button>Delete</button>
-        }
       </Link>
+      {
+        reviewContext == 'user' &&
+        <button>Update</button>
+      }
+      {
+        reviewContext == 'user' &&
+        <OpenModalButton
+          buttonText='Delete'
+          modalComponent={
+          <DeleteModal
+          id={spot.id}
+          deleteContext='spot' />}
+        />
+      }
       <Tooltip id="my-tooltip" />
     </div>
   )

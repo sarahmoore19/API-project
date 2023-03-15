@@ -37,15 +37,26 @@ export const spotReviews = (id) => async (dispatch) => {
   return response
 };
 
-export const deleteReview = () => async (dispatch) => {
-
+export const deleteReview = (id) => async () => {
+  const response = await csrfFetch(`/api/reviews/${id}`, {
+    method: 'DELETE'
+  });
+  const data = await response.json();
+  return response
 };
 
-
-export const createReview = () => async (dispatch) => {
-
+export const createReview = (rev, spotId) => async () => {
+  const {review, stars} = rev;
+  const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+    method: 'POST',
+    body:  JSON.stringify({
+      stars,
+      review,
+    })
+  });
+  const data = await response.json();
+  return response
 };
-
 
 let initialState = {
   spot: {},
