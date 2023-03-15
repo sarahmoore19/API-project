@@ -22,6 +22,7 @@ function AllSpots() {
     <div>
     {arr.map(o => (
       <SpotCard
+      reviewContext='home'
       key={o.id}
       spot={o}/>
     ))}

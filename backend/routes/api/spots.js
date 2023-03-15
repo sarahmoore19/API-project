@@ -30,7 +30,7 @@ async function addImgRating(spots) {
         [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']
       ]
     })
-    spot.avgRating = reviews.toJSON().avgRating;
+    spot.avgRating = reviews.toJSON().avgRating.toFixed(1);
     }
     catch {
       spot.avgRating = null;
@@ -160,7 +160,7 @@ router.get('/:spotId', async (req, res, next) => {
       [sequelize.fn('COUNT', sequelize.col('id')), 'numReviews']
     ]
   })
-  spot.avgStarRating = reviews.toJSON().avgRating;
+  spot.avgStarRating = reviews.toJSON().avgRating.toFixed(1);
   spot.numReviews = reviews.toJSON().numReviews;
   }
   catch {

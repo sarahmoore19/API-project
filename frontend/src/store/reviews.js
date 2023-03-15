@@ -15,16 +15,17 @@ const setSpotReviews = (arr) => {
   };
 };
 
-const setUserReviews = (obj) => {
+const setUserReviews = (arr) => {
   return {
     type: USER,
-    obj
+    arr
   };
 };
 
 export const userReviews = () => async (dispatch) => {
   const response = await csrfFetch('/api/reviews/current');
   const data = await response.json();
+  console.log(data);
   dispatch(setUserReviews(data.Reviews));
   return response
 };

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Tooltip } from 'react-tooltip'
 
-function SpotCard({spot}) {
+function SpotCard({spot, reviewContext}) {
   return (
     <div>
     <Link to={`/spots/${spot.id}`}>
@@ -18,6 +18,14 @@ function SpotCard({spot}) {
           <span>&#9733;{spot.avgRating || 'New'}</span>
         </div>
         <div>${spot.price}/night</div>
+        {
+           reviewContext == 'user' &&
+          <button>Update</button>
+        }
+        {
+          reviewContext == 'user' &&
+         <button>Delete</button>
+        }
       </Link>
       <Tooltip id="my-tooltip" />
     </div>

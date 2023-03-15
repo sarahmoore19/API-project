@@ -21,18 +21,33 @@ module.exports = {
    queryInterface.bulkInsert(options, [
     {
       spotId: 1,
-      url: "image url",
+      url: 'https://wallpapers.com/images/hd/paris-aesthetic-cv32luueyjit2i0u.jpg',
       preview: true
     },
     {
       spotId: 2,
-      url: "image url",
+      url: 'https://i.natgeofe.com/k/f576c284-661a-4046-ba51-fa95699e1a8b/hawaii-beach.png',
       preview: true
     },
     {
       spotId: 3,
-      url: "image url",
+      url: 'https://catalog.obitel-minsk.com/blog/wp-content/uploads/2020/09/2XAsc9_5af0044faad471_82363956-tmb-720x411xfill.jpg',
       preview: true
+    },
+    {
+      spotId: 1,
+      url: 'https://www.sogoodmagazine.com/wp-content/uploads/2017/06/Castiglione-laduree.jpg',
+      preview: false
+    },
+    {
+      spotId: 2,
+      url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9tw4rtOo58es08dooYAGzvVTqVXZHe0iFZA&usqp=CAU',
+      preview: false
+    },
+    {
+      spotId: 3,
+      url: 'https://www.hearthymn.com/wp-content/uploads/2018/02/Why-Is-the-Lord-Jesus-Called-Christ-1.jpg',
+      preview: false
     }
    ], {})
   },
