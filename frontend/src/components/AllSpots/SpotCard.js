@@ -6,6 +6,7 @@ import DeleteModal from '../ReviewModals/DeleteModal';
 import OpenModalButton from '../OpenModalButton';
 
 function SpotCard({spot, reviewContext}) {
+
   return (
     <div>
     <Link to={`/spots/${spot.id}`}>
@@ -23,7 +24,9 @@ function SpotCard({spot, reviewContext}) {
       </Link>
       {
         reviewContext == 'user' &&
-        <button>Update</button>
+        <Link to={`spots/${spot.id}/edit`}>
+          <button>Update</button>
+        </Link>
       }
       {
         reviewContext == 'user' &&

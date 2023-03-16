@@ -488,7 +488,7 @@ router.post('/:spotId/reviews', requireAuth, validateRev, async (req, res) => {
     let err = new Error("Spot couldn't be found");
     err.status = 404
       return res.json({
-        message: err.message,
+        errors: [err.message],
         statusCode: err.status
     })
   }
@@ -505,7 +505,7 @@ router.post('/:spotId/reviews', requireAuth, validateRev, async (req, res) => {
       let err = new Error("User already has a review for this spot");
       err.status = 403;
         return res.json({
-          message: err.message,
+          errors: [err.message],
           statusCode: err.status
       })
     }

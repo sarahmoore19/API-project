@@ -28,7 +28,7 @@ function App() {
           <Route path='/spots/new'>
             <CreateSpot/>
           </Route>
-          <Route path='/spots/edit'>
+          <Route path='/spots/:id/edit'>
             <EditSpot/>
           </Route>
           <Route path='/spots/current'>
