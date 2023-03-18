@@ -161,7 +161,7 @@ router.get('/:spotId', async (req, res, next) => {
       [sequelize.fn('COUNT', sequelize.col('id')), 'numReviews']
     ]
   })
-  spot.avgStarRating = reviews.toJSON().avgRating.toFixed(1);
+  spot.avgStarRating = reviews.toJSON().avgRating
   spot.numReviews = reviews.toJSON().numReviews
 
   }
