@@ -18,7 +18,7 @@ function SpotCard({spot, reviewContext}) {
         src={spot.previewImage || 'https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-15.png'}/>
         <div>
           <span>{spot.city}, {spot.state}</span>
-          <span>&#9733;{spot.avgRating?.toFixed(1) || 'New'}</span>
+          <span>&#9733;{spot.avgRating && Number(spot.avgRating).toFixed(1) || 'New'}</span>
         </div>
         <div>${spot.price}/night</div>
     </Link>
