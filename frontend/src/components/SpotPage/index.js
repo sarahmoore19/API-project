@@ -69,7 +69,7 @@ function OneSpot() {
           <span>${spot.price}/night </span>
           {spot.numReviews > 0 ?
             <span>
-              &#9733;{spot.avgStarRating} · {spot.numReviews} {spot.numReviews > 1 ? 'Reviews ' : 'Review '}
+              &#9733;{spot.avgStarRating?.toFixed(1)} · {spot.numReviews} {spot.numReviews > 1 ? 'Reviews ' : 'Review '}
             </span> :
             <span>
               &#9733;New
@@ -85,7 +85,7 @@ function OneSpot() {
         {
           spot.numReviews > 0 ?
           <h2>
-            &#9733;{spot.avgStarRating} · {spot.numReviews} {spot.numReviews > 1 ? 'Reviews' : 'Review'}
+            &#9733;{spot.avgStarRating?.toFixed(1)} · {spot.numReviews} {spot.numReviews > 1 ? 'Reviews' : 'Review'}
           </h2> :
           <h2>
             &#9733;New
