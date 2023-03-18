@@ -163,7 +163,7 @@ router.get('/:spotId', async (req, res, next) => {
   })
   spot.avgStarRating = reviews.toJSON().avgRating
   spot.numReviews = reviews.toJSON().numReviews
-
+  spot.avgStarRating = spot.avgStarRating.toFixed(1)
   }
   catch(e) {
     console.log('-----------', e)
