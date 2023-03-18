@@ -9,6 +9,17 @@ import CreateReviewModal from '../ReviewModals/CreateReviewModal';
 
 function OneSpot() {
 
+  let {id} = useParams()
+  const dispatch = useDispatch();
+  const sessionUser = useSelector(state => state.session.user);
+  const spot = useSelector(state => state.spots.oneSpot);
+  const reviews = useSelector(state => state.reviews.spot);
+
+  useEffect(() => {
+    dispatch(spotActions.oneSpot(id))
+    dispatch(reviewActions.spotReviews(id))
+  }, [dispatch])
+
   function hasReview() {
     for (let i = 0; i < arr.length; i++) {
       if (sessionUser && arr[i].userId == sessionUser.id) return true
@@ -16,27 +27,21 @@ function OneSpot() {
     return false
   }
 
-  let {id} = useParams()
-  const dispatch = useDispatch();
-  const sessionUser = useSelector(state => state.session.user);
-  const spot = useSelector(state => state.spots.oneSpot);
-  const reviews = useSelector(state => state.reviews.spot);
-
   let arr = Object.values(reviews);
   arr.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-
-  useEffect(() => {
-    dispatch(spotActions.oneSpot(id))
-    dispatch(reviewActions.spotReviews(id))
-  }, [dispatch])
 
   if (spot.id == undefined) return null;
 
   let imgArr = spot.SpotImages;
   let previewImage = imgArr.find(s => s.preview == true)
+  if (!previewImage) previewImage = {
+    preview: true,
+    url: 'https://www.folklor-mersch.lu/images/sursite/Photos-Coming-Soon.jpg'
+  }
 
   for (let i = imgArr.length; i < 5; i++) {
     imgArr.push({
+      id: `sample${i}`,
       preview: false,
       url: 'https://www.folklor-mersch.lu/images/sursite/Photos-Coming-Soon.jpg'
     })

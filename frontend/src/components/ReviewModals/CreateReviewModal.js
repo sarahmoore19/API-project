@@ -15,13 +15,13 @@ const CreateReviewModal = ({spotId}) => {
   const [starHover, setStarHover] = useState(0);
 
   const handleSubmit = (e) => {
+    e.preventDefault()
     setErrors([]);
     return dispatch(reviewActions.createReview({review, stars}, spotId))
      .then(closeModal)
      .then(history.push(`/spots/${spotId}`))
      .catch(async (res) => {
       const data = await res.json();
-      console.log(data)
       if (data && data.errors) setErrors(data.errors);
     });
   }
@@ -34,14 +34,12 @@ const CreateReviewModal = ({spotId}) => {
       </ul>
       <form onSubmit={handleSubmit}>
 
-        <label>
-          Review
-          <textarea
-            value={review}
-            onChange={(e) => setReview(e.target.value)}
-            required
-          />
-        </label>
+        <textarea
+          placeholder="Leave your review here..."
+          value={review}
+          onChange={(e) => setReview(e.target.value)}
+          required
+        />
 
         <div>
           {[...Array(5)].map((s, i) => {
@@ -62,6 +60,7 @@ const CreateReviewModal = ({spotId}) => {
               </button>
             );
           })}
+          <span>Stars</span>
         </div>
 
         <button
@@ -70,10 +69,13 @@ const CreateReviewModal = ({spotId}) => {
         stars < 1
         }
         type="submit">
-          Submit Review
+          Submit Your Review
         </button>
 
       </form>
+      <ul>
+        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+      </ul>
     </div>
   )
 }

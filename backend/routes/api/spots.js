@@ -97,17 +97,18 @@ router.get('/', async (req, res, next) => {
   let where = {
     price: {
       [Op.between]: [minPrice, maxPrice]
-    },
-    lat: {
-      [Op.between]: [minLat, maxLat]
-    },
-    lng: {
-      [Op.between]: [minLng, maxLng]
     }
+  // removing for frontend functionality
+ //   lat: {
+ //     [Op.between]: [minLat, maxLat]
+ //   },
+ //   lng: {
+ //     [Op.between]: [minLng, maxLng]
+ //   }
   }
 
   let spots = await Spot.findAll({
-    where: where,
+  //  where: where,
     limit: limit,
     offset: offset
   });
@@ -208,25 +209,19 @@ const validateSpot = [
   check('country')
     .exists({ checkFalsy: true })
     .withMessage('Country is required'),
-  check('lat')
-    .exists()
-    .withMessage('Latitude is not valid'),
-  check('lng')
-    .exists()
-    .withMessage('Longitude is not valid'),
   check('name')
-    .exists({ checkFalsy: true })
+    .exists({ checkFalsy: true})
     .isLength({ max: 50 })
-    .withMessage('Name must be less than 50 characters'),
+    .withMessage('Name is required and must be less than 50 characters'),
   check('description')
     .exists({ checkFalsy: true })
-    .withMessage('Description is required'),
+    .isLength({min: 30})
+    .withMessage('Description is required and must be at least 30 characters'),
    check('price')
     .exists({ checkFalsy: true })
-    .withMessage('Price per day is required'),
+    .withMessage('Price is required'),
   handleValidationErrors
 ];
-
 
 router.post('/', requireAuth, validateSpot, async (req, res) => {
   let b = req.body

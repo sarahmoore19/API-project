@@ -49,7 +49,6 @@ router.post(
       res.statusCode = 403;
       err.status = 403;
       err.errors = [];
-      console.log(e.errors)
       if (e.errors[0].path == 'username') err.errors.push('User with that username already exists');
       if (e.errors[0].path == 'email') err.errors.push('User with that email already exists');
       next(err)

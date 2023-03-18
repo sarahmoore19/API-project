@@ -29,7 +29,7 @@ module.exports = {
         lat: 37.7645358,
         lng: -122.4730327,
         name: "Bank",
-        description: "The Wolf Of Wall Street",
+        description: "Example text must be more than 30 characters",
         price: 50
       },
       {
@@ -42,7 +42,7 @@ module.exports = {
         lat: 37.7645358,
         lng: -122.4730327,
         name: "Rainbow",
-        description: "Where Dreams Are Made",
+        description: "Example text must be more than 30 characters",
         price: 100
       },
       {
@@ -55,7 +55,7 @@ module.exports = {
         lat: 37.7645358,
         lng: -122.4730327,
         name: "Heaven",
-        description: "God's Home",
+        description: "Example text must be more than 30 characters",
         price: 150
       }
      ], {})

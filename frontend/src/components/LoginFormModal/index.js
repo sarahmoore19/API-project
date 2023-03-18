@@ -24,7 +24,6 @@ function LoginFormModal() {
         async (res) => {
           const data = await res.json();
           if (data && data.errors) setErrors(data.errors);
-          console.log(data)
         }
       );
   };
@@ -38,24 +37,20 @@ function LoginFormModal() {
             <li key={idx}>{error}</li>
           ))}
         </ul>
-        <label>
-          Username or Email
           <input
+            placeholder="Username or Email"
             type="text"
             value={credential}
             onChange={(e) => setCredential(e.target.value)}
             required
           />
-        </label>
-        <label>
-          Password
           <input
+            placeholder="Password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-        </label>
         <button
         disabled={credential.length < 4 || password.length < 6}
         type="submit">

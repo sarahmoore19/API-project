@@ -1,4 +1,3 @@
-0
 // backend/utils/validation.js
 const { validationResult } = require('express-validator');
 

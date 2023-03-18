@@ -4,7 +4,6 @@ import * as reviewActions from '../../store/reviews';
 import React, { useEffect, useState } from 'react'
 import ReviewCard from '../SpotPage/ReviewCard';
 
-
 function CurrentReviews() {
   const dispatch = useDispatch()
   const reviews = useSelector(state => state.reviews.user);

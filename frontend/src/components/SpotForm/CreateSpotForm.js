@@ -7,9 +7,10 @@ function CreateSpotForm() {
 
   return (
     <div>
-    <h1>Create an New Spot</h1>
+    <h1>Create a New Spot</h1>
     <SpotForm
     context='create'
+    spot={null}
     />
   </div>
   )

@@ -1,13 +1,10 @@
 import { csrfFetch } from './csrf';
 
-const ALL = 'spots/ALL'
-const ONE = 'spots/ONE'
-const CURRENT = 'spots/CURRENT'
-
-/*
-get all spots,
-get spot by Id,
-*/
+const ALL = 'spots/ALL';
+const ONE = 'spots/ONE';
+const DELETE = 'spots/DELETE';
+const CREATE = 'spots/CREATE';
+const ADDIMG = 'spots/ADDIMG';
 
 const setAllSpots = (arr) => {
   return {
@@ -23,6 +20,21 @@ const setOneSpot = (obj) => {
   };
 };
 
+const deleteOne = (id) => {
+  return {
+    type: DELETE,
+    id
+  };
+};
+
+const createOne = (spot) => {
+  return {
+    type: CREATE,
+    spot
+  };
+};
+
+
 export const allSpots = () => async (dispatch) => {
   const response = await csrfFetch('/api/spots');
   const data = await response.json();
@@ -30,48 +42,80 @@ export const allSpots = () => async (dispatch) => {
   return response
 };
 
-export const oneSpot = (id) => async (dispatch) => {
-const response = await csrfFetch(`/api/spots/${id}`);
+export const oneSpot = (spotId) => async (dispatch) => {
+const response = await csrfFetch(`/api/spots/${spotId}`);
   const data = await response.json();
   dispatch(setOneSpot(data));
   return response
 };
 
-export const deleteSpot = (id) => async (dispatch) => {
-  const response = await csrfFetch(`/api/spots/${id}`, {
+export const deleteSpot = (spotId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
     method: 'DELETE'
   });
   const data = await response.json();
+  dispatch(deleteOne(spotId))
   return response
 };
 
-export const updateSpots = () => async (dispatch) => {
-
+export const updateSpot = (spotId, details) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
+    method: 'PUT',
+    body: JSON.stringify(details)
+  })
+  if (response.ok) {
+  const data = await response.json();
+  return data;
+  }
 };
 
-export const createSpots = () => async (dispatch) => {
-
+export const createSpot = (details) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots`, {
+    method: 'POST',
+    body:  JSON.stringify(details)
+  })
+  if (response.ok) {
+  const data = await response.json();
+  dispatch(oneSpot(data.id));
+  return data
+  }
 };
 
+export const addSpotImage = (spotId, details) => async () => {
+  const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+    method: 'POST',
+    body: JSON.stringify(details)
+  })
+  const data = await response.json();
+  return data
+};
 
 let initialState = {
   allSpots: {},
   oneSpot: {}
 }
 
-
 const spotsReducer = (state = initialState, action) => {
-  let newState;
   switch (action.type) {
     case ALL:
-      newState = {...state};
-      newState.allSpots = {};
-      action.arr.forEach(s => newState.allSpots[s.id] = s)
-      return newState;
+      let newState1 = {...state, oneSpot: {...state.oneSpot}, allSpots: {}};
+      action.arr.forEach(s => newState1.allSpots[s.id] = s);
+      return newState1;
     case ONE:
-      newState = {...state, oneSpot: {}};
-      newState.oneSpot = action.obj
-      return newState;
+      let newState2 = {...state, allSpots: {...state.allSpots}, oneSpot: {}};
+      let oneSpot = {...action.obj};
+      newState2.oneSpot = oneSpot
+      return newState2;
+    case DELETE: {
+      let newState3= {...state, oneSpot: {...state.oneSpot}, allSpots: {...state.allSpots}};
+      delete newState3.allSpots[action.id];
+      return newState3;
+    }
+    case CREATE: {
+      let newState3= {...state, oneSpot: {...state.oneSpot}, allSpots: {...state.allSpots}};
+      newState3.allSpots[action.spot.id] = action.spot
+      return newState3;
+    }
     default:
       return state;
   }

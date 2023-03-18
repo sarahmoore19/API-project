@@ -6,12 +6,12 @@ import DeleteModal from '../ReviewModals/DeleteModal';
 import OpenModalButton from '../OpenModalButton';
 
 function SpotCard({spot, reviewContext}) {
-
+ 
   return (
     <div>
     <Link to={`/spots/${spot.id}`}>
         <img
-        data-tooltip-id="my-tooltip"
+        data-tooltip-id="tooltip"
         data-tooltip-content={spot.name}
         height='250'
         width='400'
@@ -21,10 +21,10 @@ function SpotCard({spot, reviewContext}) {
           <span>&#9733;{spot.avgRating || 'New'}</span>
         </div>
         <div>${spot.price}/night</div>
-      </Link>
+    </Link>
       {
         reviewContext == 'user' &&
-        <Link to={`spots/${spot.id}/edit`}>
+        <Link to={`./${spot.id}/edit`}>
           <button>Update</button>
         </Link>
       }
@@ -34,11 +34,12 @@ function SpotCard({spot, reviewContext}) {
           buttonText='Delete'
           modalComponent={
           <DeleteModal
-          id={spot.id}
+          spot={spot}
+          reviewId={null}
           deleteContext='spot' />}
         />
       }
-      <Tooltip id="my-tooltip" />
+      <Tooltip id="tooltip" />
     </div>
   )
 }

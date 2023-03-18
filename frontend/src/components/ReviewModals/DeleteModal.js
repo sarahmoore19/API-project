@@ -3,15 +3,17 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as reviewActions from '../../store/reviews.js';
 import * as spotActions from '../../store/spots.js'
+import { useHistory } from "react-router-dom";
 
-const DeleteModal = ({deleteContext, id}) => {
-  const { closeModal } = useModal();
+const DeleteModal = ({deleteContext, review, spot}) => {
   const dispatch = useDispatch()
+  const {closeModal} = useModal();
 
-  function handleSubmit() {
-    deleteContext === 'review' ?
-    dispatch(reviewActions.deleteReview(id)) :
-    dispatch(spotActions.deleteSpot(id))
+  function handleDelete(e) {
+      deleteContext === 'review' ?
+      dispatch(reviewActions.deleteReview(review)) :
+      dispatch(spotActions.deleteSpot(spot.id))
+      closeModal()
   }
 
   return (
@@ -25,9 +27,8 @@ const DeleteModal = ({deleteContext, id}) => {
           ' spot?'
         }
         </p>
-        <form onSubmit={handleSubmit}>
         <button
-         type='submit'
+        onClick={handleDelete}
         >
           Yes (Delete
           {
@@ -37,7 +38,7 @@ const DeleteModal = ({deleteContext, id}) => {
           }
         </button>
         <button
-        onClick={() => closeModal()}
+        onClick={closeModal}
         >
           No (Keep
           {
@@ -46,7 +47,6 @@ const DeleteModal = ({deleteContext, id}) => {
             ' Spot)'
           }
         </button>
-      </form>
     </div>
   )
 }
