@@ -162,9 +162,11 @@ router.get('/:spotId', async (req, res, next) => {
     ]
   })
   spot.avgStarRating = reviews.toJSON().avgRating.toFixed(1);
-  spot.numReviews = reviews.toJSON().numReviews;
+  spot.numReviews = reviews.toJSON().numReviews
+
   }
-  catch {
+  catch(e) {
+    console.log('-----------', e)
     spot.avgStarRating = null;
     spot.numReviews = null;
   }
