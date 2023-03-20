@@ -4,6 +4,7 @@ import * as spotActions from '../../store/spots'
 import React, { useEffect, useState } from 'react'
 import SpotCard from '../AllSpots/SpotCard';
 import { oneOf } from 'express-validator';
+import '../AllSpots/index.css'
 
 function CurrentSpots() {
   const dispatch = useDispatch()
@@ -18,13 +19,16 @@ function CurrentSpots() {
   }, [dispatch])
 
   return (
-    <div>
+    <>
+    <div className='headingContainer'>
     <h2>Manage Spots</h2>
     <Link to='/spots/new'>
       <button>
         Create a New Spot
       </button>
     </Link>
+    </div>
+    <div className='spotCardsContainer currentSpotsContainer'>
     {
       arr.map(o => (
         <SpotCard
@@ -35,6 +39,7 @@ function CurrentSpots() {
       ))
     }
     </div>
+    </>
   )
 }
 

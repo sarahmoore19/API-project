@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
 import DeleteModal from '../ReviewModals/DeleteModal';
 import OpenModalButton from '../OpenModalButton';
+import './SpotCard.css'
 
 function SpotCard({spot, reviewContext}) {
 
@@ -14,9 +15,11 @@ function SpotCard({spot, reviewContext}) {
         data-tooltip-id="tooltip"
         data-tooltip-content={spot.name}
         height='250'
-        width='400'
+        width='300'
         src={spot.previewImage || 'https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-15.png'}/>
-        <div>
+        <div
+        className='cityRatingContainer'
+        >
           <span>{spot.city}, {spot.state}</span>
           <span>&#9733;{spot.avgRating && Number(spot.avgRating).toFixed(1) || 'New'}</span>
         </div>

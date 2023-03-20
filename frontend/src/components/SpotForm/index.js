@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import {useHistory} from 'react-router-dom';
 import * as spotActions from '../../store/spots';
 import { reconstructFieldPath } from 'express-validator/src/select-fields';
+import './index.css';
 
 function SpotForm({context, spot}) {
   const dispatch = useDispatch();
@@ -36,7 +37,6 @@ function SpotForm({context, spot}) {
       const newSpot = await dispatch(spotActions.createSpot({address, country, city, state, name, price, description}))
         .catch(async (res) => {
           const data = await res.json();
-          console.log(data)
           if (data?.errors) setErrors(data.errors);
         })
         if (newSpot) {
@@ -57,7 +57,6 @@ function SpotForm({context, spot}) {
     const updatedSpot = await dispatch(spotActions.updateSpot(spot.id, {address, country, city, state, name, price, description}))
       .catch(async (res) => {
         const data = await res.json();
-        console.log(data)
         if (data?.errors) setErrors(data.errors);
       })
       if (updatedSpot) history.push(`/spots/${spot.id}`)
@@ -69,7 +68,10 @@ function SpotForm({context, spot}) {
       <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
       </ul>
-      <h2>Where's your place located?</h2>
+      <h2
+      className='firsth2'>
+        Where's your place located?
+      </h2>
       <p>Guests will only get your exact address once they booked a reservation.</p>
         <label>
           Country
@@ -124,6 +126,7 @@ function SpotForm({context, spot}) {
         <label>
           $
           <input
+          className='priceInput'
             placeholder='Price per night USD'
             type="number"
             value={price}
@@ -135,6 +138,7 @@ function SpotForm({context, spot}) {
       <h2>Liven up your spot with photos</h2>
       <p>Submit a link to at least one photo to publish your spot.</p>
         <input
+          className='imageInput'
           placeholder="Preview Image URL"
           type="text"
           value={preview}
@@ -142,24 +146,28 @@ function SpotForm({context, spot}) {
           required
         />
         <input
+          className='imageInput'
           placeholder="Image URL"
           type="text"
           value={image1}
           onChange={(e) => setImage1(e.target.value)}
         />
         <input
+          className='imageInput'
           placeholder="Image URL"
           type="text"
           value={image2}
           onChange={(e) => setImage2(e.target.value)}
         />
         <input
+          className='imageInput'
           placeholder="Image URL"
           type="text"
           value={image3}
           onChange={(e) => setImage3(e.target.value)}
         />
         <input
+          className='imageInput'
           placeholder="Image URL"
           type="text"
           value={image4}
@@ -167,10 +175,14 @@ function SpotForm({context, spot}) {
         />
       </>
       }
-      <button type='submit'>
-      {context == 'update' ? 'Update ' : 'Create '}
-      Spot
-      </button>
+      <div className='buttonDiv'>
+        <button
+        className='pinkButton'
+        type='submit'>
+        {context == 'update' ? 'Update ' : 'Create '}
+          Spot
+        </button>
+      </div>
       </form>
     </div>
   )

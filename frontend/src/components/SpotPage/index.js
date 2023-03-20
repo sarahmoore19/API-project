@@ -6,6 +6,7 @@ import * as reviewActions from '../../store/reviews';
 import ReviewCard from './ReviewCard';
 import OpenModalButton from '../OpenModalButton';
 import CreateReviewModal from '../ReviewModals/CreateReviewModal';
+import './index.css'
 
 function OneSpot() {
 
@@ -50,35 +51,53 @@ function OneSpot() {
   return (
     <div>
 
-      <div>
+      <div className='spotContainer'>
+
         <h1>{spot.name}</h1>
         <h4>{spot.city}, {spot.state}, {spot.country}</h4>
-        <div>
-          <img height='350px' width='500px' src={previewImage.url}></img>
-          {imgArr.map(i => (
-            i.preview ? null :
-            <img key={i.id} height='175px' width='250px' src={i.url}></img>
-          ))}
+        <div className='wholeImagesContainer'>
+          <img height='330px' width='480px' src={previewImage.url}></img>
+          <div className='FourImagesContainer'>
+            {imgArr.map(i => (
+              i.preview ? null :
+              <img key={i.id} height='160px' width='240px' src={i.url}></img>
+            ))}
+          </div>
         </div>
-        <div>
+
+        <div className='spotInfoContainer'>
+
           <div>
             <h2>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</h2>
             <p>{spot.description}</p>
           </div>
-          <div>
-          <span>${spot.price}/night </span>
-          {spot.numReviews > 0 ?
-            <span>
-              &#9733;{spot.avgStarRating && Number(spot.avgStarRating).toFixed(1)} · {spot.numReviews} {spot.numReviews > 1 ? 'Reviews ' : 'Review '}
-            </span> :
-            <span>
-              &#9733;New
-            </span>}
-            <button onClick={() => window.alert('Coming soon!')}>
-              Reserve
-            </button>
+
+          <div className='bookingInfoContainer'>
+
+            <div className='reviewPriceContainer'>
+            <span>${spot.price}/night </span>
+              {spot.numReviews > 0 ?
+                <span>
+                  &#9733;{spot.avgStarRating && Number(spot.avgStarRating).toFixed(1)} · {spot.numReviews} {spot.numReviews > 1 ? 'Reviews ' : 'Review '}
+                </span> :
+                <span>
+                  &#9733;New
+                </span>
+              }
+            </div>
+
+              <div className='reserveButtonContainer'>
+                <button
+                className='pinkButton'
+                onClick={() => window.alert('Coming soon!')}>
+                  Reserve
+                </button>
+              </div>
+
           </div>
+
         </div>
+
       </div>
 
       <div>
@@ -96,7 +115,9 @@ function OneSpot() {
 
             <OpenModalButton
               buttonText='Post Your Review'
-              modalComponent={<CreateReviewModal spotId={id} />}
+              modalComponent={
+              <CreateReviewModal
+              spotId={id} />}
             />
 
         }

@@ -4,7 +4,7 @@ import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import {useHistory} from 'react-router-dom';
-import "./LoginForm.css";
+import "./modal.css";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -29,8 +29,8 @@ function LoginFormModal() {
   };
 
   return (
-    <>
-      <h1>Log In</h1>
+    <div className="wholeContainer">
+      <h2>Log In</h2>
       <form onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
@@ -51,21 +51,25 @@ function LoginFormModal() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-        <button
-        disabled={credential.length < 4 || password.length < 6}
-        type="submit">
-          Log In
-        </button>
-        <button
-        type='submit'
-        onClick={() => {
-          setCredential('Demo-lition');
-          setPassword('password');
-        }}>
-          Log in as Demo User
+        <div className="loginButtonContainer">
+          <button
+          disabled={credential.length < 4 || password.length < 6}
+          type="submit">
+            Log In
           </button>
+        </div>
+        <div>
+          <button
+          type='submit'
+          onClick={() => {
+            setCredential('Demo-lition');
+            setPassword('password');
+          }}>
+            Log in as Demo User
+          </button>
+        </div>
       </form>
-    </>
+    </div>
   );
 }
 

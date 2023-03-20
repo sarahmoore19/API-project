@@ -1,3 +1,28 @@
 .hidden {
   display: none;
 }
+
+.menuButton {
+  margin-left: 10px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
+.menuBox {
+  border: solid .5px black;
+  box-shadow: 1px 1px 1px, -1px -1px 1px;
+  width: max-content;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  position: absolute;
+  top: 45px;
+  right: 45px;
+  background-color: white;
+}
+
+.logout-button-container {
+  text-align: center;
+}

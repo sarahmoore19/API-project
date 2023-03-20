@@ -1,0 +1,43 @@
+.totalContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.secondContainer {
+  width: 400px;
+}
+
+input {
+  width: stretch;
+}
+
+textarea {
+  width: stretch;
+}
+
+.priceInput {
+  width: 95%;
+  margin-left: 2px;
+}
+
+.imageInput {
+  margin-bottom: 10px;
+}
+
+.buttonDiv {
+  margin-top: 20px;
+  border-top: 3px solid darkgray;
+  padding-top: 20px;
+  padding-bottom: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.secondContainer h2 {
+  border-top: 3px solid darkgray;
+  padding-top: 10px;
+}
+
+.firsth2 {
+  border-top: none;
+}

@@ -1,16 +1,10 @@
-Intro section about your project.
-List of technologies used on the project.
-At least a single image or gif showcasing the project.
-Complete instructions on how to launch the full application locally.
+AirBnB clone called RareBnB. I built the backend equipped with user auth and validation as well as the frontend.
 
-Your app must have at least two major CRUD features in addition to user authentication.
-  -The first required feature listed in the project list MUST   have complete CRUD. (Create, Read, Update, AND Delete)
-  -The second required feature should have a minimum of Create, Read & Delete.
+The backend includes CRUD features for reviews, spots, and bookings, as well as images for reviews and spots.
 
-Front-end must be built with the following for every feature:
--React
--Redux (with normalized data!)
--CSS
--FontAwesome for icons (cannot use Material UI)
--Google Fonts for fonts
+The frontend currently includes CRUD features for spots, CR for spot images, and CRD for reviews. More frontend features are coming soon.
+
+The technologies used to create this web application are JS, nodeJS, React/Redux, html, and css.
+
+The rendered link for this application is: https://api-project-ma4w.onrender.com
 

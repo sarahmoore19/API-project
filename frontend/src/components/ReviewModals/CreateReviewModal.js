@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import {useHistory} from 'react-router-dom';
 import { useModal } from "../../context/Modal";
 import * as reviewActions from '../../store/reviews.js';
-import './reviewModal.css'
+import '../LoginFormModal/modal.css'
 
 const CreateReviewModal = ({spotId}) => {
   const dispatch = useDispatch();
@@ -27,8 +27,9 @@ const CreateReviewModal = ({spotId}) => {
   }
 
   return (
-    <div>
-      <h1>How was your stay?</h1>
+    <div
+    className="wholeContainer">
+      <h2>How was your stay?</h2>
       <ul>
         {errors.map((e, i) => <li key={i}>{e}</li>)}
       </ul>
@@ -41,11 +42,12 @@ const CreateReviewModal = ({spotId}) => {
           required
         />
 
-        <div>
+        <div
+        className="starContainer">
           {[...Array(5)].map((s, i) => {
             i += 1;
             return (
-              <button
+              <span
               type='button'
               key={i}
               onClick={() => setStars(i)}
@@ -57,10 +59,10 @@ const CreateReviewModal = ({spotId}) => {
                 <span>&#9733;</span> :
                 <span>&#9734;</span>
               }
-              </button>
+              </span>
             );
           })}
-          <span>Stars</span>
+          <span> Stars</span>
         </div>
 
         <button

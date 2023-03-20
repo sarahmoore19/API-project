@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import * as spotActions from '../../store/spots';
 import SpotCard from './SpotCard';
-
+import './index.css'
 
 function AllSpots() {
   const dispatch = useDispatch();
@@ -17,16 +17,13 @@ function AllSpots() {
 
 
   return (
-    <div>
-    <h2>Spots</h2>
-    <div>
+    <div className='spotCardsContainer'>
     {arr.map(o => (
       <SpotCard
       reviewContext='home'
       key={o.id}
       spot={o}/>
     ))}
-    </div>
     </div>
   )
 }

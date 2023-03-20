@@ -1,2 +1,0 @@
-Spots - CRUD
-Reviews - CRD

@@ -4,6 +4,7 @@ import { useModal } from "../../context/Modal";
 import * as reviewActions from '../../store/reviews.js';
 import * as spotActions from '../../store/spots.js'
 import { useHistory } from "react-router-dom";
+import '../LoginFormModal/modal.css'
 
 const DeleteModal = ({deleteContext, review, spot}) => {
   const dispatch = useDispatch()
@@ -17,8 +18,8 @@ const DeleteModal = ({deleteContext, review, spot}) => {
   }
 
   return (
-    <div>
-      <h1>Confirm Delete</h1>
+    <div className="wholeContainer">
+      <h2>Confirm Delete</h2>
       <p>
         Are you sure you want to delete this
         {
@@ -38,6 +39,7 @@ const DeleteModal = ({deleteContext, review, spot}) => {
           }
         </button>
         <button
+        id="keepButton"
         onClick={closeModal}
         >
           No (Keep

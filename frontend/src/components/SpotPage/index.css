@@ -1,0 +1,65 @@
+.wholeImagesContainer {
+  display: inline-flex;
+  align-content: flex-start;
+  align-items: flex-start;
+}
+
+.wholeImagesContainer img {
+  margin: 5px;
+}
+
+.FourImagesContainer {
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+
+}
+
+@media (max-width: 1023px) {
+  .wholeImagesContainer {
+    flex-wrap: wrap;
+  }
+  .spotInfoContainer {
+    display: block;
+  }
+}
+
+.spotInfoContainer {
+  margin-top: 30px;
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 980px;
+  flex-wrap: wrap;
+  border-bottom: 3px solid black;
+}
+
+.spotInfoContainer h2 {
+  margin-top: 0;
+}
+
+.bookingInfoContainer {
+  width: 250px;
+  border: 2px solid black;
+  border-radius: 7px;
+  padding: 15px;
+  height: 70px;
+}
+
+.reviewPriceContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.reserveButtonContainer {
+  margin-top: 16px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.reserveButtonContainer > button {
+  width: 100%;
+  height: 30px;
+}

@@ -1,0 +1,21 @@
+.spotCardsContainer {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.spotCardsContainer > div {
+  margin: 10px;
+}
+
+.currentSpotsContainer {
+  justify-content: flex-start;
+}
+
+.headingContainer {
+  margin: 10px;
+}
+
+h2 {
+  margin-bottom: 12px;
+}

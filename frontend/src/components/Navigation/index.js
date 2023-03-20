@@ -9,25 +9,27 @@ function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
 
   return (
-    <ul style={{listStyleType: 'none', display: 'flex'}}>
-<li>
-  <NavLink style={{fontSize: '50px', color: '#FF5A5F', textDecoration: 'none'}} exact to="/">
-  <i className="fa-brands fa-airbnb"></i>
-  <span style={{fontSize: '25px'}}>RareBnB</span>
-    </NavLink>
-</li>
-<li>
-  { sessionUser && (
-  <NavLink style={{fontSize: '20px', color: '#FF5A5F'}} exact to="/spots/new">
-  Create a New Spot
-  </NavLink>
-  )}
-</li>
-      {isLoaded && (
-        <li>
+    <ul
+    className='navBar'
+    >
+      <li>
+        <NavLink
+        className='logoContainer'
+        exact to="/">
+        <i className="fa-brands fa-airbnb"></i>
+        <span style={{ marginLeft: '10px', fontSize: '25px'}}>RareBnB</span>
+          </NavLink>
+      </li>
+      <li className='navRightContainer'>
+        {sessionUser && (
+          <NavLink exact to="/spots/new">
+          Create a New Spot
+          </NavLink>
+        )}
+        {isLoaded && (
           <ProfileButton user={sessionUser} />
-        </li>
-      )}
+        )}
+      </li>
     </ul>
   );
 }

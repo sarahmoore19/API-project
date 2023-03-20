@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import {useHistory} from 'react-router-dom';
 import { useModal } from "../../context/Modal";
 import * as sessionActions from "../../store/session";
-import './SignupForm.css';
+import '../LoginFormModal/modal.css';
 
 function SignupFormModal() {
   const dispatch = useDispatch();
@@ -33,8 +33,8 @@ function SignupFormModal() {
   };
 
   return (
-    <>
-      <h1>Sign Up</h1>
+    <div className="wholeContainer">
+      <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
@@ -93,7 +93,7 @@ function SignupFormModal() {
           Sign Up
         </button>
       </form>
-    </>
+    </div>
   );
 }
 
