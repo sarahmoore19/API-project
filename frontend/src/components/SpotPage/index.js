@@ -6,6 +6,7 @@ import * as reviewActions from '../../store/reviews';
 import ReviewCard from './ReviewCard';
 import OpenModalButton from '../OpenModalButton';
 import CreateReviewModal from '../ReviewModals/CreateReviewModal';
+import BookingModal from '../BookingModal';
 import './index.css'
 
 function OneSpot() {
@@ -87,11 +88,10 @@ function OneSpot() {
             </div>
 
               <div className='reserveButtonContainer'>
-                <button
-                className='pinkButton'
-                onClick={() => window.alert('Coming soon!')}>
-                  Reserve
-                </button>
+                <OpenModalButton
+                buttonText='Reserve'
+                modalComponent={<BookingModal spotId={id}/>}
+            />
               </div>
 
           </div>
