@@ -31,11 +31,21 @@ function CurrentSpots() {
     <div className='spotCardsContainer currentSpotsContainer'>
     {
       arr.map(o => (
+        <div>
         <SpotCard
         reviewContext='user'
         key={o.id}
         spot={o}
-      />
+        />
+        <div
+        >
+          <Link to={`/bookings/${o.id}`}>
+            <button>
+              View Bookings
+            </button>
+          </Link>
+        </div>
+        </div>
       ))
     }
     </div>

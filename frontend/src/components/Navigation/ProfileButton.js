@@ -61,7 +61,7 @@ function ProfileButton({ user }) {
               <Link to='/reviews/current'>Manage Reviews</Link>
             </li>
             <li>
-              <Link to='/bookings/current'>Manage Bookings</Link>
+              <Link to='/bookings/current'>Manage Reservations</Link>
             </li>
             <li className="logout-button-container">
               <button

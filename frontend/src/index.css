@@ -13,11 +13,13 @@ a {
 }
 
 button {
-  background-color: slategray;
   color: white;
-  border: 2px solid lightgray;
-  border-radius: 5px;
-  font-size: 14px;
+  background-color: #FF5A5F;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 2px 2px 2px black;
+  height: 30px;
+  margin: 3px;
 }
 
 button:hover {
@@ -41,7 +43,7 @@ ul {
 .pinkButton {
   background-color: #FF5A5F;
   border: none;
-  border-radius: 0;
+  border-radius: 3px;
   box-shadow: 2px 2px 2px black;
   height: 30px;
 }
@@ -49,7 +51,7 @@ ul {
 #pinkButton {
   background-color: #FF5A5F;
   border: none;
-  border-radius: 0;
+  border-radius: 3px;
   box-shadow: 2px 2px 2px black;
   height: 30px;
 }

@@ -1,4 +1,5 @@
 .cityRatingContainer {
   display: flex;
   justify-content: space-between;
+  max-width: 300px;
 }

@@ -3,10 +3,10 @@ import { csrfFetch } from './csrf';
 const SPOT = 'bookings/SPOT';
 const USER = 'bookings/USER';
 
-const spotBookings1 = (arr) => {
+const spotBookings1 = (obj) => {
   return {
     type: SPOT,
-    arr
+    obj
   };
 };
 
@@ -18,7 +18,7 @@ const userBookings1 = (obj) => {
 };
 
 export const spotBookings = (spotId) => async (dispatch) => {
-  const response = await csrfFetch(`/api/${spotId}/bookings`);
+  const response = await csrfFetch(`/api/spots/${spotId}/bookings`);
   const data = await response.json();
   dispatch(spotBookings1(data));
   return response
@@ -40,28 +40,17 @@ const response = await csrfFetch(`/api/bookings/current`);
 //   return response
 // };
 
-// export const updateBooking = (spotId, details) => async (dispatch) => {
-//   const response = await csrfFetch(`/api/spots/${spotId}`, {
-//     method: 'PUT',
-//     body: JSON.stringify(details)
-//   })
-//   if (response.ok) {
-//   const data = await response.json();
-//   return data;
-//   }
-// };
-
-// export const createBooking = (details) => async (dispatch) => {
-//   const response = await csrfFetch(`/api/spots`, {
-//     method: 'POST',
-//     body:  JSON.stringify(details)
-//   })
-//   if (response.ok) {
-//   const data = await response.json();
-//   dispatch(createBooking(data.id));
-//   return data
-//   }
-// };
+export const createBooking = (details, spotId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}/bookings`, {
+    method: 'POST',
+    body:  JSON.stringify(details)
+  })
+  const data = await response.json();
+  if (response.ok) {
+  dispatch(createBooking(data.id));
+  }
+  return data
+};
 
 let initialState = {
   spotBookings: {},
@@ -72,7 +61,7 @@ const bookingsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SPOT:
       let newState1 = { userBookings: {...state.userBookings}, spotBookings: {}};
-      action.arr.forEach(b => newState1.spotBooking[b.id] = b);
+      action.obj.Bookings.forEach(b => newState1.spotBookings[b.id] = b);
       return newState1;
     case USER:
       let newState2 = { spotBookings: {...state.spotBookings}, userBookings: {}};

@@ -10,6 +10,7 @@ import CurrentReviews from "./components/Navigation/CurrentReviews";
 import CurrentSpots from "./components/Navigation/CurrentSpots";
 import OneSpot from "./components/SpotPage";
 import UserBookings from "./components/MyBookingsPage";
+import SpotBookings from "./components/SpotBookingsPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -43,6 +44,9 @@ function App() {
           </Route>
           <Route path='/bookings/current'>
             <UserBookings/>
+          </Route>
+          <Route path='/bookings/:id'>
+            <SpotBookings/>
           </Route>
           <Route>
             <AllSpots/>
