@@ -31,14 +31,16 @@ const response = await csrfFetch(`/api/bookings/current`);
   return response
 };
 
-// export const deleteBooking = (spotId) => async (dispatch) => {
-//   const response = await csrfFetch(`/api/spots/${spotId}`, {
-//     method: 'DELETE'
-//   });
-//   const data = await response.json();
-//   dispatch(deleteBooking1(spotId))
-//   return response
-// };
+export const deleteBooking = (bookingId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/bookings/${bookingId}`, {
+    method: 'DELETE'
+  });
+  const data = await response.json();
+  if (response.ok) {
+     dispatch(userBookings())
+    }
+  return data
+};
 
 export const createBooking = (details, spotId) => async (dispatch) => {
   const response = await csrfFetch(`/api/spots/${spotId}/bookings`, {
@@ -47,7 +49,7 @@ export const createBooking = (details, spotId) => async (dispatch) => {
   })
   const data = await response.json();
   if (response.ok) {
-  dispatch(createBooking(data.id));
+  // dispatch(createBooking(data.id));
   }
   return data
 };

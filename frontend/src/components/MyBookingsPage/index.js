@@ -4,6 +4,8 @@ import * as bookingActions from '../../store/bookings';
 import * as spotActions from '../../store/spots'
 import React, { useEffect, useState } from 'react'
 import SpotCard from '../AllSpots/SpotCard';
+import OpenModalButton from '../OpenModalButton';
+import DeleteBookingModal from '../DeleteBookingModal';
 
 function UserBookings() {
   const dispatch = useDispatch()
@@ -48,7 +50,11 @@ function UserBookings() {
           <div>Check In: {new Date(o.startDate).toDateString()}</div>
           <div>Check Out: {new Date(o.endDate).toDateString()}</div>
           <div>Total: ${((new Date(o.endDate).valueOf() - new Date(o.startDate).valueOf()) / 86400000) * o.Spot.price}</div>
-          <button>Cancel Your Reservation</button>
+          {  new Date(o.startDate).valueOf() > new Date().valueOf() &&
+          <OpenModalButton
+          buttonText={'Cancel Your Reservation'}
+          modalComponent={<DeleteBookingModal bookingId={o.id}/>}
+          />}
         </div>
       ))}
       </div>

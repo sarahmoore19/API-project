@@ -51,7 +51,6 @@ function SpotBookings() {
         <div>Customer Name: {o.User.firstName} {o.User.lastName}</div>
         <div>Check In: {new Date(o.startDate).toDateString()}</div>
         <div>Check Out: {new Date(o.endDate).toDateString()}</div>
-        <button>Cancel Customer Reservation</button>
         </div>
       ))}
       </div>
