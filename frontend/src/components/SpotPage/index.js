@@ -88,13 +88,19 @@ function OneSpot() {
             </div>
 
               <div className='reserveButtonContainer'>
-                { spot.ownerId == sessionUser.id &&
+                { !sessionUser &&
                 <button
                 style={{cursor: 'not-allowed'}}
-                title={spot.ownerId == sessionUser.id && 'Owners Cannot Reserve Own Spots'}>
+                title={'Log in to reserve'}>
                   Reserve
                 </button> }
-                { spot.ownerId == sessionUser.id || <OpenModalButton
+                { !!sessionUser && (spot.ownerId == sessionUser?.id) &&
+                <button
+                style={{cursor: 'not-allowed'}}
+                title={spot.ownerId == sessionUser?.id && 'Owners Cannot Reserve Own Spots'}>
+                  Reserve
+                </button> }
+                { (!!sessionUser && (spot.ownerId !== sessionUser?.id)) && <OpenModalButton
                 buttonText='Reserve'
                 modalComponent={<BookingModal spotId={id}/>}
                 />}
